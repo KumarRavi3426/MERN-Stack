@@ -1,0 +1,128 @@
+lec 2
+cd backend _ navigate to backend folder
+npm run dev -> scripts in package.json
+
+.env file isn't pushed in git, ignored by .gitignore
+used to hide sensitive information, like port
+inside .env file, no spacings between PORT and value
+environment variable can be accessed by installing package "dotenv"
+dotenv loads .env files into a process.env variable, globally accessible in a node environment
+
+to send a post request, we can't just type the url, we need to have some javascript/form on the frontend, or we can use POSTMAN
+
+lec 3
+we need a middleware
+app.use(express.json()) for accessing the body of request
+
+lec 4
+mongoose lets us add a document only if, all the properties specified in the schema are present in the document
+
+lec 5
+MongoDB alone is schemaless, it's mongoose that lets us make schemas
+
+lec 9
+response.json() _ .json() method parses json into object
+.stringify _ converts object into json
+json format contains quotations on key also
+
+{workouts && workouts.map(workout => (      //here we have used normal parentheses instead of curly braces because we are returning the jsx element directly
+        <WorkoutDetails workout={workout} key={workout._id} />
+        ))}
+
+CORS _ cross object resource sharing error
+when we try to fetch from port 4000, this error is displayed, we can install cors package, but we will use proxy in package.json of react
+
+set proxy to the backend server url _ it means,  it will proxy any unrecognized url at this backend address _ add "proxy" in "package.json"
+
+lec 10
+
+e.preventDefault() _ to prevent the default action of a form submit button
+
+lec 11 _ React context 
+
+this is useful when a lot of different components share and update the same state
+
+
+After the form is filled, and a new workout is added to the database, but it's not updated on the frontend, we need to refresh
+to tackle this, instead of reloading the whole page to display one extra document, we use react context
+react context provides global state to components, and we can update their state by dispatch actions from the components
+Rather than passing workouts data as props to different components, we will make it globally accessible to all components
+all this is done locally, and not on the server, so that it can be in sync with the database
+
+workoutContextProvider provides 'state' and 'dispatch' as 'values' to other components
+
+argument inside dispatch function is called action
+
+to update the state, call dispatch function
+type_ describes the state change
+payload _ data we need to make the change
+when dispatch is called, reducer function is invoked, it passes the action into reducer function
+
+we could use useContext hook, to use the state and dispatch, but we would create a custom hook
+
+lec 14 _ finishing touches
+
+delete icon _ google material icons outlined
+date _ install fns module in frontend folder
+npm i date-fns
+
+
+=========
+export way
+in react _ we say 
+        const  name = () => {}, export default name 
+        export const name = () => {}
+        import name from './file.js'
+        import {name} from './file.js'
+
+
+in node _ we say 
+        module.exports = {}
+        import {name} from './file.js'
+        const name = require('./file.js')
+
+==========
+
+MERN AUTH
+
+lec 2
+
+lec 3
+we are hashing the password before saving it to the database
+creating a signup static method inside models file, like the findOneById, etc.
+
+/////////////_______________\\\\\\\\\\\\\\        throw, try, catch, async, await, this _ other async things
+
+salt _ random set of characters added before it gets hashed, to make it more secure
+
+put await when calling an asynchronous function
+
+lec 4
+npm install validator
+
+lec 5
+
+jwt _ json web token
+used for authentication between server and browser
+
+a token consists of 3 parts _ 
+header (Contains the algorithm used for the JWT)
+payload (Contains non-sensitive user data (e.g. a user id, not the password) to authenticate the user) 
+verify signature (Used to verify the token by the server and that it's not tampered)
+
+header, payload & a secret string (known only to the server) are hashed together, to create the signature
+this is called the signing part
+
+when a user signs in with the payload, browser sends header and payload to the server _ server creates token, and sends it back with response to the browser
+when the browser further sends a response, the token is sent along to authenticate
+
+lec 6
+
+jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' }) _ 
+method/ function to sign a token 
+first parameter is from payload
+second is secret string
+third is options object
+
+lec 13
+check the localstorage first if there is a token, if there is, then set the token in the headers
