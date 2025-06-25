@@ -12,7 +12,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-            const response = await fetch('/api/workouts', {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/workouts`, {
                 //in options, set the headers to send authorization token, along with request
                 headers: {
                     'Authorization': `Bearer ${user.token}`
