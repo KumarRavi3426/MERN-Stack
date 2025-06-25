@@ -35,3 +35,6 @@ mongoose.connect(process.env.MONGO_URI)
     })
     .catch(err => console.log("error hai"))
 
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome to Planner app</h1>");
+});
